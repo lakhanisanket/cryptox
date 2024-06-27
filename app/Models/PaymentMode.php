@@ -20,7 +20,6 @@ class PaymentMode extends Model implements HasMedia
 
     protected $appends = [
         'icon',
-        'name_with_icon'
     ];
 
     protected $fillable = [
@@ -107,12 +106,5 @@ class PaymentMode extends Model implements HasMedia
     public function getDeletedAtAttribute($value)
     {
         return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('project.datetime_format')) : null;
-    }
-
-    public function getNameWithIconAttribute()
-    {
-        $num = $this->name;
-
-        return $num;
     }
 }

@@ -19,6 +19,7 @@ class CryptoCurrency extends Model implements HasMedia
 
     protected $appends = [
         'icon',
+        'symbol_with_name'
     ];
 
     public $table = 'crypto_currencies';
@@ -107,5 +108,12 @@ class CryptoCurrency extends Model implements HasMedia
     public function getDeletedAtAttribute($value)
     {
         return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('project.datetime_format')) : null;
+    }
+
+    public function getSymbolWithNameAttribute()
+    {
+        $num = $this->name.' ( '. $this->symbol .' )';
+
+        return $num;
     }
 }

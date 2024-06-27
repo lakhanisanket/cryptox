@@ -16,6 +16,7 @@
         "joaopaulolndev/filament-edit-profile": "^1.0",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
+        "rawilk/filament-password-input": "^2.0",
         "spatie/laravel-medialibrary": "^11.7"
     },
     "require-dev": {

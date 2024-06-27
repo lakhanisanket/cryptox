@@ -58,12 +58,12 @@ class CreateCryptoTrade extends CreateRecord
                     ->numeric(),
                 Select::make('crypto_currency_id')
                     ->label('Currency Currency')
-                    ->options(CryptoCurrency::pluck('name', 'id')->toArray()),
+                    ->options(CryptoCurrency::all()->pluck('symbol_with_name', 'id')),
                 TextInput::make('crypto_currency_value')
                     ->numeric(),
                 Select::make('payment_mode_id')
                     ->label('Payment Mode')
-                    ->options(PaymentMode::all()->pluck('name_with_icon', 'id')),
+                    ->options(PaymentMode::all()->pluck('name', 'id')),
                 Select::make('fiat_wallet_id')
                     ->label('Fiat Wallet')
                     ->options(FiatWallet::pluck('user_id', 'id')->toArray()),

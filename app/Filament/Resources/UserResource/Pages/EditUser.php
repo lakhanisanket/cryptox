@@ -7,6 +7,8 @@ use Filament\Actions;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Support\Facades\Hash;
+use Rawilk\FilamentPasswordInput\Password;
 
 class EditUser extends EditRecord
 {
@@ -22,6 +24,10 @@ class EditUser extends EditRecord
                 TextInput::make('email')
                     ->email()
                     ->required(),
+                Password::make('password')
+                    ->password()
+                    ->required()
+                    ->afterStateUpdated(fn ($state, $set) => $set('password', Hash::make($state))),
             ]);
     }
 
