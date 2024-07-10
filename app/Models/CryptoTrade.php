@@ -46,6 +46,7 @@ class CryptoTrade extends Model implements HasMedia
         'crypto_currency_value',
         'payment_mode_id',
         'fiat_wallet_id',
+        'user_id',
         'note',
         'status',
     ];
@@ -109,6 +110,11 @@ class CryptoTrade extends Model implements HasMedia
     public function platform()
     {
         return $this->belongsTo(Platform::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function platformAccounts()

@@ -33,7 +33,8 @@ class CreateCryptoTrade extends CreateRecord
                         'buy' => 'Buy',
                         'sell' => 'Sell',
                     ]),
-                Select::make('user')
+                Select::make('user_id')
+                    ->label('User')
                     ->options(User::pluck('name', 'id')->toArray())
                     ->default(fn() => Auth::id()),
                 Select::make('platform_id')
@@ -57,7 +58,7 @@ class CreateCryptoTrade extends CreateRecord
                 TextInput::make('currency_value')
                     ->numeric(),
                 Select::make('crypto_currency_id')
-                    ->label('Currency Currency')
+                    ->label('Crypto Currency')
                     ->options(CryptoCurrency::all()->pluck('symbol_with_name', 'id')),
                 TextInput::make('crypto_currency_value')
                     ->numeric(),
@@ -66,7 +67,7 @@ class CreateCryptoTrade extends CreateRecord
                     ->options(PaymentMode::all()->pluck('name', 'id')),
                 Select::make('fiat_wallet_id')
                     ->label('Fiat Wallet')
-                    ->options(FiatWallet::pluck('user_id', 'id')->toArray()),
+                    ->options(FiatWallet::all()->pluck('name', 'id')),
                 SpatieMediaLibraryFileUpload::make('crypto_trade_documents')
                     ->label('Documents')
                     ->multiple()

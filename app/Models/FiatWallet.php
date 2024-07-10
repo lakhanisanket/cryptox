@@ -32,6 +32,7 @@ class FiatWallet extends Model
     ];
 
     protected $fillable = [
+        'name',
         'currency_id',
         'amount',
         'type_of_user',
@@ -69,6 +70,11 @@ class FiatWallet extends Model
         'note',
     ];
 
+    protected $appends = [
+        'symbol_with_amount',
+        'symbol_with_paid_amount',
+    ];
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
@@ -76,7 +82,7 @@ class FiatWallet extends Model
 
     public function currency()
     {
-        return $this->belongsTo(Currency::class);
+        return $this->belongsTo(Currency::class, 'currency_id', 'id');
     }
 
     public function getTypeOfUserLabelAttribute($value)
@@ -117,5 +123,19 @@ class FiatWallet extends Model
     public function getDeletedAtAttribute($value)
     {
         return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('project.datetime_format')) : null;
+    }
+
+    public function getSymbolWithAmountAttribute()
+    {
+        $num = $this->currency->symbol.' '.$this->amount;
+
+        return $num;
+    }
+
+    public function getSymbolWithPaidAmountAttribute()
+    {
+        $num = $this->currency->symbol.' '.$this->paid_amount;
+
+        return $num;
     }
 }

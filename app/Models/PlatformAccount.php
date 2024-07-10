@@ -19,6 +19,10 @@ class PlatformAccount extends Model
         '0' => 'False',
     ];
 
+    protected $appends = [
+        'platform_with_account'
+    ];
+
     protected $dates = [
         'created_at',
         'updated_at',
@@ -82,5 +86,12 @@ class PlatformAccount extends Model
     public function getDeletedAtAttribute($value)
     {
         return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('project.datetime_format')) : null;
+    }
+
+    public function getPlatformWithAccountAttribute()
+    {
+        $num = $this->username.' ('.$this->platform->name.')';
+
+        return $num;
     }
 }

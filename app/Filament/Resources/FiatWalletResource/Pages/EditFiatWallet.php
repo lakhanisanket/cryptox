@@ -22,8 +22,10 @@ class EditFiatWallet extends EditRecord
     {
         return $form
             ->schema([
-                Select::make('currency')
-                    ->options(Currency::pluck('name', 'id')->toArray()),
+                TextInput::make('name'),
+                Select::make('currency_id')
+                    ->options(Currency::pluck('name', 'id')->toArray())
+                    ->relationship('currency', 'name'),
                 TextInput::make('amount')
                     ->numeric(),
                 Select::make('type_of_user')
@@ -33,11 +35,14 @@ class EditFiatWallet extends EditRecord
                         'client' => 'Client',
                     ]),
                 Select::make('user')
-                    ->options(User::pluck('name', 'id')->toArray()),
-                Select::make('payment_mode')
-                    ->options(PaymentMode::pluck('name', 'id')->toArray()),
-                Select::make('paid_currency')
-                    ->options(Currency::pluck('name', 'id')->toArray()),
+                    ->options(User::pluck('name', 'id')->toArray())
+                    ->relationship('user', 'name'),
+                Select::make('payment_mode_id')
+                    ->options(PaymentMode::pluck('name', 'id')->toArray())
+                    ->relationship('paymentMode', 'name'),
+                Select::make('paid_currency_id')
+                    ->options(Currency::pluck('name', 'id')->toArray())
+                    ->relationship('currency', 'name'),
                 TextInput::make('paid_amount')
                     ->numeric(),
                 Textarea::make('note')
@@ -47,6 +52,7 @@ class EditFiatWallet extends EditRecord
                     ->default(true),
             ]);
     }
+
     protected function getHeaderActions(): array
     {
         return [

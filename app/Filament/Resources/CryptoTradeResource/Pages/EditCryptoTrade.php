@@ -35,7 +35,8 @@ class EditCryptoTrade extends EditRecord
                     ]),
                 Select::make('user')
                     ->options(User::pluck('name', 'id')->toArray())
-                    ->default(fn() => Auth::id()),
+                    ->default(fn() => Auth::id())
+                    ->relationship('user', 'name'),
                 Select::make('platform_id')
                     ->label('Platform')
                     ->options(Platform::pluck('name', 'id')->toArray())
@@ -53,12 +54,14 @@ class EditCryptoTrade extends EditRecord
                     ->reactive(),
                 Select::make('currency_id')
                     ->label('Currency')
-                    ->options(Currency::all()->pluck('name_with_symbol', 'id')),
+                    ->options(Currency::all()->pluck('name_with_symbol', 'id'))
+                    ->relationship('currency', 'name'),
                 TextInput::make('currency_value')
                     ->numeric(),
                 Select::make('crypto_currency_id')
-                    ->label('Currency Currency')
-                    ->options(CryptoCurrency::all()->pluck('symbol_with_name', 'id')),
+                    ->label('Crypto Currency')
+                    ->options(CryptoCurrency::all()->pluck('symbol_with_name', 'id'))
+                    ->relationship('cryptoCurrency', 'name'),
                 TextInput::make('crypto_currency_value')
                     ->numeric(),
                 Select::make('payment_mode_id')
@@ -66,7 +69,7 @@ class EditCryptoTrade extends EditRecord
                     ->options(PaymentMode::all()->pluck('name', 'id')),
                 Select::make('fiat_wallet_id')
                     ->label('Fiat Wallet')
-                    ->options(FiatWallet::pluck('user_id', 'id')->toArray()),
+                    ->options(FiatWallet::all()->pluck('name', 'id')),
                 SpatieMediaLibraryFileUpload::make('crypto_trade_documents')
                     ->label('Documents')
                     ->multiple()

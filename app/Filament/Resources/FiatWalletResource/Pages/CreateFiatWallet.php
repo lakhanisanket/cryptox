@@ -23,6 +23,7 @@ class CreateFiatWallet extends CreateRecord
     {
         return $form
             ->schema([
+                TextInput::make('name'),
                 Select::make('currency_id')
                     ->label('Currency')
                     ->options(Currency::all()->pluck('name_with_symbol', 'id')),

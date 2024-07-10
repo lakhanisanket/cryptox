@@ -9,6 +9,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Pages\CreateRecord;
+use Illuminate\Support\Facades\Hash;
+use Rawilk\FilamentPasswordInput\Password;
 
 class CreateUser extends CreateRecord
 {
@@ -24,6 +26,10 @@ class CreateUser extends CreateRecord
                 TextInput::make('email')
                     ->email()
                     ->required(),
+                Password::make('password')
+                    ->password()
+                    ->required()
+                    ->afterStateUpdated(fn ($state, $set) => $set('password', Hash::make($state))),
             ]);
     }
 }
